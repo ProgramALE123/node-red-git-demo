@@ -1,0 +1,459 @@
+[
+    {
+        "id": "a110000000000001",
+        "type": "tab",
+        "label": "Cliente REST",
+        "disabled": false,
+        "info": "Flujo cliente: botones Dashboard, solicitudes REST, visualización de resultados y depuración."
+    },
+    {
+        "id": "a110000000000002",
+        "type": "tab",
+        "label": "Servidor REST",
+        "disabled": false,
+        "info": "Flujo servidor: expone las rutas REST y devuelve JSON de consumo y ubicación."
+    },
+    {
+        "id": "b220000000000001",
+        "type": "ui-base",
+        "name": "Dashboard Energético",
+        "path": "/dashboard",
+        "includeClientData": true,
+        "acceptsClientConfig": [],
+        "showPathInSidebar": false,
+        "headerContent": "page",
+        "navigationStyle": "default",
+        "titleBarStyle": "default",
+        "info": "Configuración base del Dashboard 2.0; la interfaz se publica en /dashboard."
+    },
+    {
+        "id": "b220000000000005",
+        "type": "ui-theme",
+        "name": "Tema energético moderno",
+        "colors": {
+            "surface": "#ffffff",
+            "primary": "#087f8c",
+            "bgPage": "#f1f6f6",
+            "groupBg": "#ffffff",
+            "groupOutline": "#d8e5e5"
+        },
+        "sizes": {
+            "density": "comfortable",
+            "pagePadding": "24px",
+            "groupGap": "20px",
+            "groupBorderRadius": "16px",
+            "widgetGap": "16px"
+        },
+        "info": "Tema visual personalizado en tonos teal, con fondo claro y bordes redondeados."
+    },
+    {
+        "id": "b220000000000002",
+        "type": "ui-page",
+        "name": "Monitoreo energético",
+        "ui": "b220000000000001",
+        "path": "/energia",
+        "icon": "dashboard",
+        "layout": "grid",
+        "theme": "b220000000000005",
+        "order": 1,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "info": "Página única del Dashboard energético, accesible en /dashboard/energia."
+    },
+    {
+        "id": "b220000000000003",
+        "type": "ui-group",
+        "name": "Panel de monitoreo",
+        "page": "b220000000000002",
+        "width": "12",
+        "height": "4",
+        "order": 1,
+        "showTitle": true,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "info": "Grupo visual que contiene el encabezado, botones y resultados."
+    },
+    {
+        "id": "a110000000000012",
+        "type": "function",
+        "z": "a110000000000001",
+        "name": "Preparar GET consumo",
+        "func": "// El cliente solicita consumo usando el endpoint obligatorio y tipo=consumo.\nmsg.method = 'GET';\nmsg.url = 'http://127.0.0.1:1880/API/6toB/Alejandro?tipo=consumo';\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 160,
+        "wires": [
+            [
+                "a110000000000013"
+            ]
+        ],
+        "info": "Cliente — configura GET http://127.0.0.1:1880/API/6toB/Alejandro?tipo=consumo."
+    },
+    {
+        "id": "a110000000000013",
+        "type": "http request",
+        "z": "a110000000000001",
+        "name": "Solicitar consumo al servidor",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 620,
+        "y": 160,
+        "wires": [
+            [
+                "b440000000000001"
+            ]
+        ],
+        "info": "Cliente — realiza la petición HTTP GET y convierte la respuesta JSON a objeto."
+    },
+    {
+        "id": "a110000000000014",
+        "type": "debug",
+        "z": "a110000000000001",
+        "name": "debug1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1180,
+        "y": 190,
+        "wires": [],
+        "info": "Cliente — debug1 muestra el JSON completo del consumo recibido."
+    },
+    {
+        "id": "a110000000000016",
+        "type": "function",
+        "z": "a110000000000001",
+        "name": "Preparar GET ubicación",
+        "func": "// El cliente solicita ubicación usando el endpoint obligatorio y tipo=ubicacion.\nmsg.method = 'GET';\nmsg.url = 'http://127.0.0.1:1880/API/6toB/Alejandro?tipo=ubicacion';\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 320,
+        "wires": [
+            [
+                "a110000000000017"
+            ]
+        ],
+        "info": "Cliente — configura GET http://127.0.0.1:1880/API/6toB/Alejandro?tipo=ubicacion."
+    },
+    {
+        "id": "a110000000000017",
+        "type": "http request",
+        "z": "a110000000000001",
+        "name": "Solicitar ubicación al servidor",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 620,
+        "y": 320,
+        "wires": [
+            [
+                "b440000000000002"
+            ]
+        ],
+        "info": "Cliente — realiza la petición HTTP GET de ubicación y convierte JSON a objeto."
+    },
+    {
+        "id": "a110000000000018",
+        "type": "debug",
+        "z": "a110000000000001",
+        "name": "debug2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1180,
+        "y": 350,
+        "wires": [],
+        "info": "Cliente — debug2 muestra el JSON con laboratorio y bloque."
+    },
+    {
+        "id": "b220000000000010",
+        "type": "ui-button",
+        "z": "a110000000000001",
+        "group": "b220000000000003",
+        "name": "Consultar consumo",
+        "label": "Consultar consumo energético",
+        "order": 2,
+        "width": 6,
+        "emulateClick": false,
+        "tooltip": "Consulta consumo actual (kWh)",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "flash",
+        "iconPosition": "left",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "topicType": "str",
+        "buttonColor": "",
+        "textColor": "",
+        "iconColor": "",
+        "enableClick": true,
+        "enablePointerdown": false,
+        "pointerdownPayload": "",
+        "pointerdownPayloadType": "str",
+        "enablePointerup": false,
+        "pointerupPayload": "",
+        "pointerupPayloadType": "str",
+        "x": 140,
+        "y": 160,
+        "wires": [
+            [
+                "a110000000000012"
+            ]
+        ],
+        "info": "Botón del Dashboard que inicia la consulta REST de consumo."
+    },
+    {
+        "id": "b220000000000011",
+        "type": "ui-button",
+        "z": "a110000000000001",
+        "group": "b220000000000003",
+        "name": "Consultar ubicación",
+        "label": "Consultar ubicación del laboratorio",
+        "order": 3,
+        "width": 6,
+        "emulateClick": false,
+        "tooltip": "Consulta laboratorio y bloque",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "map-marker",
+        "iconPosition": "left",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "topicType": "str",
+        "buttonColor": "",
+        "textColor": "",
+        "iconColor": "",
+        "enableClick": true,
+        "enablePointerdown": false,
+        "pointerdownPayload": "",
+        "pointerdownPayloadType": "str",
+        "enablePointerup": false,
+        "pointerupPayload": "",
+        "pointerupPayloadType": "str",
+        "x": 140,
+        "y": 320,
+        "wires": [
+            [
+                "a110000000000016"
+            ]
+        ],
+        "info": "Botón del Dashboard que inicia la consulta REST de ubicación."
+    },
+    {
+        "id": "b440000000000001",
+        "type": "function",
+        "z": "a110000000000001",
+        "name": "Preparar texto consumo",
+        "func": "// Da formato a la respuesta del servidor para Dashboard y conserva JSON original para debug1.\nlet r = msg.payload;\nif (typeof r === 'string') {\n    try { r = JSON.parse(r); } catch (e) {\n        return [{payload: 'Respuesta inválida del servidor: ' + r}, msg];\n    }\n}\nif (!r || typeof r.consumo_kwh !== 'number') {\n    return [{payload: 'No se recibió un consumo válido. Revisa debug1.'}, msg];\n}\nconst vista = { payload: 'Consumo energético: ' + r.consumo_kwh.toFixed(1) + ' ' + (r.unidad || 'kWh') };\nreturn [vista, msg];",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 890,
+        "y": 160,
+        "wires": [
+            [
+                "b440000000000003"
+            ],
+            [
+                "a110000000000014"
+            ]
+        ],
+        "info": "Formatea el consumo para la página y reenvía la respuesta original a debug1."
+    },
+    {
+        "id": "b440000000000002",
+        "type": "function",
+        "z": "a110000000000001",
+        "name": "Preparar texto ubicación",
+        "func": "// Da formato a laboratorio y bloque para Dashboard y conserva JSON original para debug2.\nlet r = msg.payload;\nif (typeof r === 'string') {\n    try { r = JSON.parse(r); } catch (e) {\n        return [{payload: 'Respuesta inválida del servidor: ' + r}, msg];\n    }\n}\nif (!r || !r.laboratorio || !r.bloque) {\n    return [{payload: 'No se recibieron laboratorio y bloque válidos. Revisa debug2.'}, msg];\n}\nconst vista = { payload: 'Laboratorio: ' + r.laboratorio + ' | Bloque: ' + r.bloque };\nreturn [vista, msg];",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 890,
+        "y": 320,
+        "wires": [
+            [
+                "b440000000000004"
+            ],
+            [
+                "a110000000000018"
+            ]
+        ],
+        "info": "Formatea la ubicación para la página y reenvía la respuesta original a debug2."
+    },
+    {
+        "id": "b440000000000003",
+        "type": "ui-text",
+        "z": "a110000000000001",
+        "group": "b220000000000003",
+        "order": 4,
+        "width": 6,
+        "height": 1,
+        "name": "Resultado consumo",
+        "label": "Consumo actual",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "style": false,
+        "font": "Helvetica",
+        "fontSize": 18,
+        "color": "#17494d",
+        "wrapText": true,
+        "className": "",
+        "value": "payload",
+        "valueType": "msg",
+        "x": 1180,
+        "y": 120,
+        "wires": [],
+        "info": "Muestra en Dashboard el último valor de consumo en kWh."
+    },
+    {
+        "id": "b440000000000004",
+        "type": "ui-text",
+        "z": "a110000000000001",
+        "group": "b220000000000003",
+        "order": 5,
+        "width": 6,
+        "height": 1,
+        "name": "Resultado ubicación",
+        "label": "Ubicación",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "style": false,
+        "font": "Helvetica",
+        "fontSize": 18,
+        "color": "#17494d",
+        "wrapText": true,
+        "className": "",
+        "value": "payload",
+        "valueType": "msg",
+        "x": 1180,
+        "y": 280,
+        "wires": [],
+        "info": "Muestra en Dashboard el laboratorio y el bloque recibidos."
+    },
+    {
+        "id": "b550000000000001",
+        "type": "ui-template",
+        "z": "a110000000000001",
+        "group": "b220000000000003",
+        "page": "",
+        "ui": "",
+        "name": "Encabezado visual",
+        "order": 1,
+        "width": 12,
+        "height": 3,
+        "head": "",
+        "format": "<template>\n  <section class=\"energy-hero\">\n    <div class=\"hero-mark\">⚡</div>\n    <div class=\"hero-copy\">\n      <p class=\"eyebrow\">MONITOREO · API REST</p>\n      <h2>Monitoreo energético</h2>\n      <p>Consulta el consumo actual y la ubicación del laboratorio desde un solo panel.</p>\n    </div>\n    <div class=\"hero-badge\"><span class=\"pulse\"></span> CONSULTA EN TIEMPO REAL</div>\n  </section>\n</template>\n<style>\n.energy-hero{box-sizing:border-box;display:flex;align-items:center;gap:20px;flex-wrap:wrap;padding:24px 28px;border-radius:16px;background:linear-gradient(120deg,#063b43 0%,#087f8c 62%,#13a89a 100%);color:#fff;box-shadow:0 10px 28px rgba(8,79,87,.16);font-family:inherit}\n.hero-mark{width:56px;height:56px;display:grid;place-items:center;border-radius:16px;background:rgba(255,255,255,.16);font-size:30px}\n.hero-copy{flex:1;min-width:220px}.hero-copy .eyebrow{margin:0 0 5px;font-size:11px;letter-spacing:1.8px;font-weight:700;opacity:.78}.hero-copy h2{margin:0;font-size:25px;line-height:1.25;font-weight:700}.hero-copy p:last-child{margin:7px 0 0;font-size:14px;line-height:1.5;opacity:.88}\n.hero-badge{display:flex;align-items:center;gap:9px;padding:9px 13px;border:1px solid rgba(255,255,255,.32);border-radius:999px;background:rgba(255,255,255,.1);font-size:12px;font-weight:600;white-space:nowrap}\n.pulse{width:8px;height:8px;border-radius:50%;background:#75f0bc;box-shadow:0 0 0 4px rgba(117,240,188,.16)}\n@media(max-width:600px){.energy-hero{padding:19px;gap:14px}.hero-copy h2{font-size:21px}.hero-badge{margin-left:70px}}\n</style>",
+        "noerr": 0,
+        "storeOutMessages": true,
+        "passthru": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "energy-hero-widget",
+        "x": 140,
+        "y": 60,
+        "wires": [
+            []
+        ],
+        "info": "Encabezado HTML/CSS adaptable; ocupa tres filas para evitar desplazamiento interno."
+    },
+    {
+        "id": "a110000000000021",
+        "type": "http in",
+        "z": "a110000000000002",
+        "name": "GET API energético",
+        "url": "/API/6toB/Alejandro",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 160,
+        "y": 140,
+        "wires": [
+            [
+                "a110000000000022"
+            ]
+        ],
+        "info": "Servidor — recibe GET /API/6toB/Alejandro y lee tipo=consumo o tipo=ubicacion."
+    },
+    {
+        "id": "a110000000000022",
+        "type": "function",
+        "z": "a110000000000002",
+        "name": "Generar respuesta según tipo",
+        "func": "// Atiende el endpoint obligatorio y selecciona la respuesta desde ?tipo=consumo o ?tipo=ubicacion.\nconst tipo = msg.req && msg.req.query ? msg.req.query.tipo : 'consumo';\nif (tipo === 'ubicacion') {\n    msg.payload = {\n        laboratorio: 'Laboratorio de Redes',\n        bloque: 'Bloque de Ingeniería'\n    };\n    msg.statusCode = 200;\n} else if (tipo === 'consumo' || !tipo) {\n    msg.payload = {\n        sistema: 'Monitoreo Energético',\n        consumo_kwh: Math.round((1 + Math.random() * 14) * 10) / 10,\n        unidad: 'kWh'\n    };\n    msg.statusCode = 200;\n} else {\n    msg.payload = {error: 'Tipo de consulta no válido. Use consumo o ubicacion.'};\n    msg.statusCode = 400;\n}\nmsg.headers = {'Content-Type': 'application/json; charset=utf-8'};\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 140,
+        "wires": [
+            [
+                "a110000000000023"
+            ]
+        ],
+        "info": "Servidor — si tipo=consumo genera aleatoriamente un valor de 1.0 a 15.0 kWh; si tipo=ubicacion devuelve laboratorio y bloque."
+    },
+    {
+        "id": "a110000000000023",
+        "type": "http response",
+        "z": "a110000000000002",
+        "name": "Responder API JSON",
+        "statusCode": "",
+        "headers": [],
+        "x": 700,
+        "y": 140,
+        "wires": [],
+        "info": "Servidor — devuelve el JSON generado por la ruta API energética."
+    }
+]
